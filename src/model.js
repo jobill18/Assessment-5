@@ -1,8 +1,9 @@
-import { DataTypes, Model } from 'sequelize';
-import util from 'util';
-import connectToDB from './db.js';
+import { DataTypes, Model } from "sequelize";
+import util from "util";
+import connectToDB from "./db.js";
+import { type } from "os";
 
-const db = await connectToDB('postgresql:///animals');
+const db = await connectToDB("postgres://josep:admin@localhost:5432/animals");
 
 export class Human extends Model {
   [util.inspect.custom]() {
@@ -10,31 +11,35 @@ export class Human extends Model {
   }
 
   getFullName() {
-    // TODO: Implement this method
+    return `${fname} ${lname}`;
   }
 }
 
 Human.init(
   {
-    humanId : {
+    humanId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-    }
-    fname : {
-      type: DataTypes.VARCHAR,
-      allowNull: false
-    }
-    lname : {
-      type: DataTypes.VARCHAR,
-      allowNull: false
-    }
-    email : {
-      type: DataTypes.VARCHAR,
-      allowNull: false
-    }
+    },
+    fname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    modelName: "humans",
+    sequelize: db,
   }
-)
+);
 
 export class Animal extends Model {
   [util.inspect.custom]() {
@@ -44,26 +49,30 @@ export class Animal extends Model {
 
 Animal.init(
   {
-    animalId : {
+    animalId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-    }
-    name : {
-      type: DataTypes.VARCHAR,
-      allowNull: false
-    }
-    species : {
-      type: DataTypes.VARCHAR,
-      allowNull: false
-    }
-    birthYear : {
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    species: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    birthYear: {
       type: DataTypes.INTEGER,
-    }
+    },
+  },
+  {
+    modelName: "animals",
+    sequelize: db,
   }
-)
+);
 
-Human.hasMany(Animal, { foreignKey: "humanID"})
-Animal.belongsTo(Human, { foreignKey: "humanID"})
+Human.hasMany(Animal, { foreignKey: "humanId" });
+Animal.belongsTo(Human, { foreignKey: "humanId" });
 
 export default db;
