@@ -32,5 +32,5 @@ SELECT fname, lname, email  FROM customers AS c
 		ON c.id = o.customer_id
 	LEFT JOIN cupcakes AS k
 		ON o.cupcake_id = k.id
-WHERE name = 'funfetti'
+WHERE name = 'funfetti' AND processed = true
 GROUP BY fname, lname, email
