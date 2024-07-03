@@ -27,3 +27,10 @@ GROUP BY (email)
 ORDER BY (total) DESC
 
 -- Problem 6
+SELECT fname, lname, email  FROM customers AS c
+	LEFT JOIN orders AS o
+		ON c.id = o.customer_id
+	LEFT JOIN cupcakes AS k
+		ON o.cupcake_id = k.id
+WHERE name = 'funfetti'
+GROUP BY fname, lname, email
