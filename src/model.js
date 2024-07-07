@@ -11,7 +11,7 @@ export class Human extends Model {
   }
 
   getFullName() {
-    return `${fname} ${lname}`;
+    return `${human.fname} ${human.lname}`;
   }
 }
 
